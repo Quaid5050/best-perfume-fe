@@ -31,6 +31,7 @@ Developer experience first, extremely flexible code structure and only keep what
 - ⌨️ Form handling with React Hook Form
 - 🔴 Validation library with Zod
 - 🗃️ State management with Zustand
+- 🔄 Data fetching with React Query (TanStack Query)
 - 📏 Linter with [ESLint](https://eslint.org) (default Next.js, Next.js Core Web Vitals, Tailwind CSS and Antfu configuration)
 - 💖 Code Formatter with Prettier
 - 🦊 Husky for Git Hooks (replaced by Lefthook)
@@ -134,6 +135,7 @@ After defining the environment variables in your GitHub Actions, your localizati
 │   ├── libs                        # 3rd party libraries configuration
 │   ├── locales                     # Locales folder (i18n messages)
 │   ├── styles                      # Styles folder
+│   ├── hooks                       # React hooks folder
 │   ├── stores                      # Zustand stores folder
 │   ├── templates                   # Templates folder
 │   ├── types                       # Type definitions
@@ -281,6 +283,115 @@ export const Counter = () => {
 - **Minimal API**: Simple and intuitive API for managing global state
 
 For more information, visit the [Zustand documentation](https://github.com/pmndrs/zustand).
+
+### Data Fetching with React Query
+
+The project uses [TanStack Query (React Query)](https://tanstack.com/query/latest) for server state management, data fetching, caching, and synchronization. React Query works seamlessly with Next.js App Router and complements server-side rendering.
+
+#### Setup
+
+React Query is already configured with a `QueryProvider` in the root layout. The provider includes:
+- Default query options optimized for SSR
+- React Query Devtools for development debugging
+- Automatic caching and background refetching
+
+#### Creating Query Hooks
+
+Example hooks are provided in `src/hooks/use-perfumes.ts`:
+
+```typescript
+import { useQuery } from '@tanstack/react-query';
+
+interface Perfume {
+  id: string;
+  name: string;
+  brand: string;
+  price: number;
+  image: string;
+}
+
+const fetchPerfumes = async () => {
+  const response = await fetch('/api/perfumes');
+  if (!response.ok) throw new Error('Failed to fetch perfumes');
+  return response.json();
+};
+
+export const usePerfumes = () => {
+  return useQuery({
+    queryKey: ['perfumes'],
+    queryFn: fetchPerfumes,
+  });
+};
+```
+
+#### Using Queries in Components
+
+```typescript
+'use client';
+
+import { usePerfumes } from '@/hooks/use-perfumes';
+
+export const PerfumeList = () => {
+  const { data, isLoading, error } = usePerfumes();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <div>
+      {data?.perfumes.map((perfume) => (
+        <div key={perfume.id}>
+          <h3>{perfume.name}</h3>
+          <p>{perfume.brand} - ${perfume.price}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+```
+
+#### Mutations
+
+For creating, updating, or deleting data:
+
+```typescript
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+export const useAddToCart = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (perfumeId: string) => {
+      const response = await fetch('/api/cart', {
+        method: 'POST',
+        body: JSON.stringify({ perfumeId }),
+      });
+      if (!response.ok) throw new Error('Failed to add to cart');
+      return response.json();
+    },
+    onSuccess: () => {
+      // Invalidate and refetch cart data
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    },
+  });
+};
+```
+
+#### Features
+
+- **Automatic Caching**: Queries are cached automatically with smart invalidation
+- **Background Refetching**: Data stays fresh with background updates
+- **Optimistic Updates**: Update UI immediately before server confirmation
+- **SSR Compatible**: Works seamlessly with Next.js server components
+- **Devtools**: Built-in React Query Devtools for debugging
+- **TypeScript**: Full type safety with TypeScript support
+
+#### When to Use React Query vs Zustand
+
+- **React Query**: Use for server state (API data, database queries, external APIs)
+- **Zustand**: Use for client state (UI state, form state, local preferences)
+
+For more information, visit the [TanStack Query documentation](https://tanstack.com/query/latest).
 
 ### Deploy to production
 
