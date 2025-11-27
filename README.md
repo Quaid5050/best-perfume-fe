@@ -38,6 +38,7 @@ Developer experience first, extremely flexible code structure and only keep what
 - 🎯 Class name utilities with clsx and tailwind-merge
 - 📅 Date manipulation with [Day.js](https://day.js.org)
 - ✨ Animations with [Framer Motion](https://www.framer.com/motion)
+- ⏱️ Debounce and throttle with [use-debounce](https://github.com/xnimorz/use-debounce)
 - 📏 Linter with [ESLint](https://eslint.org) (default Next.js, Next.js Core Web Vitals, Tailwind CSS and Antfu configuration)
 - 💖 Code Formatter with Prettier
 - 🦊 Husky for Git Hooks (replaced by Lefthook)
@@ -881,6 +882,154 @@ export const ListExample = ({ items }: { items: string[] }) => {
 - **Drag & Drop**: Interactive drag and drop interfaces
 
 For more information, visit the [Framer Motion documentation](https://www.framer.com/motion).
+
+### Debounce and Throttle with use-debounce
+
+The project uses [use-debounce](https://github.com/xnimorz/use-debounce) for debouncing and throttling values and callbacks. This is especially useful for search inputs, API calls, and other scenarios where you want to delay execution until the user stops typing.
+
+#### Setup
+
+use-debounce is installed and ready to use. Convenience hooks are available at:
+- `src/hooks/use-debounced-value.ts` - For debouncing values
+- `src/hooks/use-debounced-callback.ts` - For debouncing callback functions
+
+#### Debouncing Values
+
+Use `useDebounce` when you need to debounce a value (like search input):
+
+```typescript
+'use client';
+
+import { useState } from 'react';
+import { useDebounce } from '@/hooks/use-debounced-value';
+import { useQuery } from '@tanstack/react-query';
+
+export const SearchComponent = () => {
+  const [search, setSearch] = useState('');
+  const [debouncedSearch] = useDebounce(search, 500);
+
+  // This query will only run when debouncedSearch changes
+  const { data } = useQuery({
+    queryKey: ['search', debouncedSearch],
+    queryFn: () => fetchResults(debouncedSearch),
+    enabled: !!debouncedSearch,
+  });
+
+  return (
+    <div>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
+      {/* Results update 500ms after user stops typing */}
+    </div>
+  );
+};
+```
+
+#### Debouncing Callbacks
+
+Use `useDebouncedCallback` when you need to debounce a function:
+
+```typescript
+'use client';
+
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
+
+export const SearchInput = () => {
+  const debouncedSearch = useDebouncedCallback((value: string) => {
+    // This function will only be called 500ms after the last call
+    fetchResults(value);
+  }, 500);
+
+  return (
+    <input
+      onChange={(e) => debouncedSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+};
+```
+
+#### Throttling
+
+You can also use throttling instead of debouncing:
+
+```typescript
+'use client';
+
+import { useThrottledCallback } from 'use-debounce';
+
+export const ScrollComponent = () => {
+  const throttledScroll = useThrottledCallback((event: Event) => {
+    // This will run at most once every 100ms
+    handleScroll(event);
+  }, 100);
+
+  return (
+    <div onScroll={throttledScroll}>
+      Scrollable content
+    </div>
+  );
+};
+```
+
+#### Features
+
+- **Value Debouncing**: Debounce any value with `useDebounce`
+- **Callback Debouncing**: Debounce function calls with `useDebouncedCallback`
+- **Throttling**: Throttle function calls with `useThrottledCallback`
+- **TypeScript**: Full TypeScript support
+- **Flexible Delay**: Customizable delay in milliseconds
+- **Cancel Support**: Ability to cancel pending debounced calls
+- **React 19 Compatible**: Works with latest React
+
+#### Common Use Cases
+
+- **Search Inputs**: Delay API calls until user stops typing
+- **Form Validation**: Debounce validation checks
+- **Resize Handlers**: Throttle window resize events
+- **Scroll Events**: Throttle scroll handlers for performance
+- **Auto-save**: Debounce auto-save functionality
+- **Filter Inputs**: Delay filter application
+- **Price Range Sliders**: Debounce slider value changes
+
+#### Example: Search with Debounce
+
+```typescript
+'use client';
+
+import { useState } from 'react';
+import { useDebounce } from '@/hooks/use-debounced-value';
+import { useQuery } from '@tanstack/react-query';
+
+export const ProductSearch = () => {
+  const [query, setQuery] = useState('');
+  const [debouncedQuery] = useDebounce(query, 300);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['products', debouncedQuery],
+    queryFn: () => searchProducts(debouncedQuery),
+    enabled: debouncedQuery.length > 2,
+  });
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search products..."
+      />
+      {isLoading && <p>Searching...</p>}
+      {data && <ProductList products={data} />}
+    </div>
+  );
+};
+```
+
+For more information, visit the [use-debounce documentation](https://github.com/xnimorz/use-debounce).
 
 ### Deploy to production
 
