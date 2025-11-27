@@ -5,7 +5,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev:spotlight": "npx @spotlightjs/spotlight",
+    "dev:spotlight": "pnpm dlx @spotlightjs/spotlight",
     "dev:next": "next dev",
     "dev": "npm-run-all --parallel dev:*",
     "build:next": "next build --webpack",
