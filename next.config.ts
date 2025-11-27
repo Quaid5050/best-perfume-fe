@@ -15,6 +15,10 @@ const baseConfig: NextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true,
   },
+  serverExternalPackages: [
+    'import-in-the-middle',
+    'require-in-the-middle',
+  ],
 };
 
 // Initialize the Next-Intl plugin
