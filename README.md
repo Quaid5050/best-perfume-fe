@@ -32,6 +32,7 @@ Developer experience first, extremely flexible code structure and only keep what
 - 🔴 Validation library with Zod
 - 🗃️ State management with Zustand
 - 🔄 Data fetching with React Query (TanStack Query)
+- 🔗 URL state management with nuqs
 - 📏 Linter with [ESLint](https://eslint.org) (default Next.js, Next.js Core Web Vitals, Tailwind CSS and Antfu configuration)
 - 💖 Code Formatter with Prettier
 - 🦊 Husky for Git Hooks (replaced by Lefthook)
@@ -392,6 +393,101 @@ export const useAddToCart = () => {
 - **Zustand**: Use for client state (UI state, form state, local preferences)
 
 For more information, visit the [TanStack Query documentation](https://tanstack.com/query/latest).
+
+### URL State Management with nuqs
+
+The project uses [nuqs](https://nuqs.47ng.com/) for managing URL search parameters (query strings). nuqs provides type-safe, SSR-compatible URL state management, perfect for filters, pagination, sorting, and other state that should be reflected in the URL.
+
+#### Setup
+
+nuqs is already configured with a `NuqsProvider` in the root layout. The provider works seamlessly with Next.js App Router and next-intl.
+
+#### Creating Parsers
+
+Parsers define the structure and types of your URL parameters. Create parsers in your own files:
+
+```typescript
+import { parseAsInteger, parseAsString, parseAsStringEnum } from 'nuqs';
+
+export const searchParsers = {
+  q: parseAsString.withDefault(''),
+  page: parseAsInteger.withDefault(1),
+  sort: parseAsStringEnum(['asc', 'desc', 'newest']).withDefault('newest'),
+  filter: parseAsString,
+};
+```
+
+#### Using nuqs in Components
+
+```typescript
+'use client';
+
+import { useQueryStates } from 'nuqs';
+import { searchParsers } from '@/libs/your-parsers';
+
+export const SearchComponent = () => {
+  const [filters, setFilters] = useQueryStates(searchParsers);
+
+  return (
+    <div>
+      <input
+        value={filters.q}
+        onChange={(e) => setFilters({ q: e.target.value })}
+        placeholder="Search..."
+      />
+      <select
+        value={filters.sort}
+        onChange={(e) => setFilters({ sort: e.target.value as any })}
+      >
+        <option value="newest">Newest</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+  );
+};
+```
+
+#### Reading URL Parameters in Server Components
+
+```typescript
+import { parseAsInteger, parseAsString } from 'nuqs/server';
+import { searchParams } from 'nuqs/server';
+
+export default async function PerfumePage({
+  searchParams: nextSearchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams(nextSearchParams);
+  const page = parseAsInteger.withDefault(1).parseServerSide(params.page);
+  const q = parseAsString.withDefault('').parseServerSide(params.q);
+
+  // Use page and q for server-side data fetching
+  return <div>Page {page}, Search: {q}</div>;
+}
+```
+
+#### Features
+
+- **Type-Safe**: Full TypeScript support with type inference
+- **SSR Compatible**: Works seamlessly with Next.js server components
+- **URL Synchronized**: State is always reflected in the URL
+- **Shareable URLs**: Users can share filtered/searched URLs
+- **Browser Navigation**: Back/forward buttons work correctly
+- **Default Values**: Easy to set default values for parameters
+- **Validation**: Built-in validation for enum and number types
+
+#### Common Use Cases
+
+- **Search & Filters**: Search queries, filters, ranges
+- **Pagination**: Page numbers in URL
+- **Sorting**: Sort options
+- **View Modes**: Grid/list view toggle
+- **Modal States**: Open/close states for modals
+- **Tab Navigation**: Active tab state
+
+For more information, visit the [nuqs documentation](https://nuqs.47ng.com/).
 
 ### Deploy to production
 

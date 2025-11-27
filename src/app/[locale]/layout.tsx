@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PostHogProvider } from '@/components/analytics/post-hog-provider';
+import { NuqsProvider } from '@/components/providers/nuqs-adapter';
 import { QueryProvider } from '@/components/providers/query-provider';
 import { routing } from '@/libs/i18n-routing';
 import '@/styles/global.css';
@@ -52,11 +53,13 @@ export default async function RootLayout(props: {
     <html lang={locale}>
       <body>
         <QueryProvider>
-          <NextIntlClientProvider>
-            <PostHogProvider>
-              {props.children}
-            </PostHogProvider>
-          </NextIntlClientProvider>
+          <NuqsProvider>
+            <NextIntlClientProvider>
+              <PostHogProvider>
+                {props.children}
+              </PostHogProvider>
+            </NextIntlClientProvider>
+          </NuqsProvider>
         </QueryProvider>
       </body>
     </html>
