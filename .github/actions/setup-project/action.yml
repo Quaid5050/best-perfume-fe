@@ -1,5 +1,5 @@
 name: Setup Node.js and dependencies
-description: Setup Node.js environment with npm dependencies
+description: Setup Node.js environment with pnpm dependencies
 
 inputs:
   node-version:
@@ -13,23 +13,28 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+
     - name: Use Node.js ${{ inputs.node-version }}
       uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}
-        cache: npm
+        cache: 'pnpm'
 
     - name: Restore or cache node_modules
       id: cache-node-modules
       uses: actions/cache@v4
       with:
         path: node_modules
-        key: node-modules-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
+        key: node-modules-${{ inputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       shell: bash
-      run: npm ci
+      run: pnpm install --frozen-lockfile
 
     - name: Restore Next.js build output
       if: inputs.restore-nextjs-cache == 'true'

@@ -5,8 +5,9 @@
   "tasks": [
     {
       "label": "Project wide type checking with TypeScript",
-      "type": "npm",
-      "script": "check:types",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["run", "check:types"],
       "problemMatcher": ["$tsc"],
       "group": {
         "kind": "build",

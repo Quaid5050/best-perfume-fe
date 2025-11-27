@@ -94,7 +94,7 @@ Optional features (easy to add):
 
 ### Requirements
 
-- Node.js 22+ and npm
+- Node.js 22+ and pnpm
 
 ### Getting started
 
@@ -103,7 +103,7 @@ Run the following command on your local environment:
 ```shell
 git clone --depth=1 https://github.com/ixartz/Next-js-Boilerplate.git my-project-name
 cd my-project-name
-npm install
+pnpm install
 ```
 
 For your information, all dependencies are updated every month.
@@ -111,7 +111,7 @@ For your information, all dependencies are updated every month.
 Then, you can run the project locally in development mode with live reload by executing:
 
 ```shell
-npm run dev
+pnpm run dev
 ```
 
 Open http://localhost:3000 with your favorite browser to see your project.
@@ -173,7 +173,7 @@ You have full access to the source code for further customization. The provided 
 The project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification, meaning all commit messages must be formatted accordingly. To help you write commit messages, the project provides an interactive CLI that guides you through the commit process. To use it, run the following command:
 
 ```shell
-npm run commit
+pnpm run commit
 ```
 
 One of the benefits of using Conventional Commits is the ability to automatically generate GitHub releases. It also allows us to automatically determine the next version number based on the types of commits that are included in a release.
@@ -189,7 +189,7 @@ Setting up CodeRabbit is simple, visit [coderabbit.ai](https://www.coderabbit.ai
 All unit tests are located alongside the source code in the same directory, making them easier to find. The unit test files follow this format: `*.test.ts` or `*.test.tsx`. The project uses Vitest and React Testing Library for unit testing. You can run the tests with the following command:
 
 ```shell
-npm run test
+pnpm run test
 ```
 
 ### Integration & E2E Testing
@@ -198,7 +198,7 @@ The project uses Playwright for integration and end-to-end (E2E) testing. Integr
 
 ```shell
 npx playwright install # Only for the first time in a new environment
-npm run test:e2e
+pnpm run test:e2e
 ```
 
 ### Storybook
@@ -210,7 +210,7 @@ Stories are located alongside your components in the `src` directory and follow 
 You can run Storybook in development mode with:
 
 ```shell
-npm run storybook
+pnpm run storybook
 ```
 
 This will start Storybook on http://localhost:6006 where you can view and interact with your UI components in isolation.
@@ -218,7 +218,7 @@ This will start Storybook on http://localhost:6006 where you can view and intera
 To run Storybook tests in headless mode, you can use the following command:
 
 ```shell
-npm run storybook:test
+pnpm run storybook:test
 ```
 
 ### State Management with Zustand
@@ -1132,13 +1132,13 @@ For more information, visit the [shadcn/ui documentation](https://ui.shadcn.com)
 You can generate a production build with:
 
 ```shell
-$ npm run build
+$ pnpm run build
 ```
 
 It generates an optimized production build of the boilerplate. To test the generated build, run:
 
 ```shell
-$ npm run start
+$ pnpm run start
 ```
 
 This command starts a local server using the production build. You can now open http://localhost:3000 in your preferred browser to see the result.
@@ -1216,18 +1216,18 @@ Arcjet is configured with a central client at `src/libs/arcjet.ts` that includes
 
 The project includes several commands to ensure code quality and consistency. You can run:
 
-- `npm run lint` to check for linting errors
-- `npm run lint:fix` to automatically fix fixable issues from the linter
-- `npm run check:types` to verify type safety across the entire project
-- `npm run check:deps` help identify unused dependencies and files
-- `npm run check:i18n` ensures all translations are complete and properly formatted
+- `pnpm run lint` to check for linting errors
+- `pnpm run lint:fix` to automatically fix fixable issues from the linter
+- `pnpm run check:types` to verify type safety across the entire project
+- `pnpm run check:deps` help identify unused dependencies and files
+- `pnpm run check:i18n` ensures all translations are complete and properly formatted
 
 #### Bundle Analyzer
 
 Next.js Boilerplate includes a built-in bundle analyzer. It can be used to analyze the size of your JavaScript bundles. To begin, run the following command:
 
 ```shell
-npm run build-stats
+pnpm run build-stats
 ```
 
 By running the command, it'll automatically open a new browser window with the results.
