@@ -39,6 +39,7 @@ Developer experience first, extremely flexible code structure and only keep what
 - 📅 Date manipulation with [Day.js](https://day.js.org)
 - ✨ Animations with [Framer Motion](https://www.framer.com/motion)
 - ⏱️ Debounce and throttle with [use-debounce](https://github.com/xnimorz/use-debounce)
+- 🎨 UI components with [shadcn/ui](https://ui.shadcn.com) (built on Radix UI)
 - 📏 Linter with [ESLint](https://eslint.org) (default Next.js, Next.js Core Web Vitals, Tailwind CSS and Antfu configuration)
 - 💖 Code Formatter with Prettier
 - 🦊 Husky for Git Hooks (replaced by Lefthook)
@@ -1030,6 +1031,101 @@ export const ProductSearch = () => {
 ```
 
 For more information, visit the [use-debounce documentation](https://github.com/xnimorz/use-debounce).
+
+### UI Components with shadcn/ui
+
+The project uses [shadcn/ui](https://ui.shadcn.com) for UI components. shadcn/ui is a collection of re-usable components built with Radix UI and Tailwind CSS. Components are copied into your project, giving you full control to customize them.
+
+#### Setup
+
+shadcn/ui is configured and ready to use. The configuration is in `components.json`. Essential components are already added:
+- `Button` - Versatile button component with multiple variants
+- `Input` - Form input component
+
+#### Adding More Components
+
+To add more components, use the shadcn CLI:
+
+```bash
+npx shadcn@latest add [component-name]
+```
+
+For example:
+```bash
+npx shadcn@latest add dialog
+npx shadcn@latest add dropdown-menu
+npx shadcn@latest add select
+```
+
+#### Using Components
+
+```typescript
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+export const FormExample = () => {
+  return (
+    <form className="space-y-4">
+      <Input type="text" placeholder="Enter your name" />
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+};
+```
+
+#### Button Variants
+
+```typescript
+import { Button } from '@/components/ui/button';
+
+export const ButtonVariants = () => {
+  return (
+    <div className="flex gap-2">
+      <Button variant="default">Default</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="link">Link</Button>
+    </div>
+  );
+};
+```
+
+#### Button Sizes
+
+```typescript
+<Button size="sm">Small</Button>
+<Button size="default">Default</Button>
+<Button size="lg">Large</Button>
+<Button size="icon">
+  <Icons.search />
+</Button>
+```
+
+#### Features
+
+- **Copy-Paste Components**: Components are copied into your project, not installed as dependencies
+- **Fully Customizable**: Modify components directly in your codebase
+- **Built on Radix UI**: Accessible, unstyled components
+- **TypeScript**: Full TypeScript support
+- **Tailwind CSS**: Styled with Tailwind CSS
+- **Theme Support**: Built-in light/dark mode support via CSS variables
+- **No Runtime**: Zero runtime JavaScript, pure CSS
+
+#### Available Components
+
+Essential components are included:
+- `Button` - Button component with variants
+- `Input` - Input field component
+
+Browse all available components at [ui.shadcn.com/docs/components](https://ui.shadcn.com/docs/components).
+
+#### Customization
+
+All components are in `src/components/ui/` and can be customized directly. The theme is controlled via CSS variables in `src/styles/global.css`.
+
+For more information, visit the [shadcn/ui documentation](https://ui.shadcn.com).
 
 ### Deploy to production
 
