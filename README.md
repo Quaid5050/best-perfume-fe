@@ -1275,6 +1275,8 @@ If you find this project helpful, please consider sponsoring it to help support 
 
 [![Sponsor](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/quaid5050)
 
+**Made with ♥ by Quaid Ahmed**
+
 ---
 
 ## Credits
