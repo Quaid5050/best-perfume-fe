@@ -1,8 +1,6 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
-import { DemoBanner } from '@/components/DemoBanner';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
-import { BaseTemplate } from '@/templates/BaseTemplate';
 
 export default async function Layout(props: {
   children: React.ReactNode;
@@ -10,61 +8,35 @@ export default async function Layout(props: {
 }) {
   const { locale } = await props.params;
   setRequestLocale(locale);
-  const t = await getTranslations({
-    locale,
-    namespace: 'RootLayout',
-  });
 
   return (
-    <>
-      <DemoBanner />
-      <BaseTemplate
-        leftNav={(
-          <>
-            <li>
-              <Link
-                href="/"
-                className="border-none text-gray-700 hover:text-gray-900"
-              >
-                {t('home_link')}
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-gray-200">
+        <div className="mx-auto max-w-7xl px-4 py-4">
+          <nav className="flex items-center justify-between">
+            <div className="flex gap-6">
+              <Link href="/" className="text-gray-900 hover:text-gray-600">
+                Home
               </Link>
-            </li>
-            <li>
-              <Link
-                href="/about/"
-                className="border-none text-gray-700 hover:text-gray-900"
-              >
-                {t('about_link')}
+              <Link href="/about" className="text-gray-900 hover:text-gray-600">
+                About
               </Link>
-            </li>
-            <li>
-              <Link
-                href="/portfolio/"
-                className="border-none text-gray-700 hover:text-gray-900"
-              >
-                {t('portfolio_link')}
+              <Link href="/portfolio" className="text-gray-900 hover:text-gray-600">
+                Portfolio
               </Link>
-            </li>
-            <li>
-              <a
-                className="border-none text-gray-700 hover:text-gray-900"
-                href="https://github.com/ixartz/Next-js-Boilerplate"
-              >
-                GitHub
-              </a>
-            </li>
-          </>
-        )}
-        rightNav={(
-          <>
-            <li>
-              <LocaleSwitcher />
-            </li>
-          </>
-        )}
-      >
-        <div className="py-5 text-xl [&_p]:my-6">{props.children}</div>
-      </BaseTemplate>
-    </>
+            </div>
+            <LocaleSwitcher />
+          </nav>
+        </div>
+      </header>
+      <main className="mx-auto max-w-7xl px-4 py-8">
+        {props.children}
+      </main>
+      <footer className="border-t border-gray-200 mt-auto">
+        <div className="mx-auto max-w-7xl px-4 py-4 text-center text-sm text-gray-600">
+          © {new Date().getFullYear()} All rights reserved.
+        </div>
+      </footer>
+    </div>
   );
 }

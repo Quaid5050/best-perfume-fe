@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Image from 'next/image';
 import { routing } from '@/libs/I18nRouting';
 
 type IPortfolioDetailProps = {
@@ -40,32 +39,10 @@ export default async function PortfolioDetail(props: IPortfolioDetailProps) {
   });
 
   return (
-    <>
-      <h1 className="capitalize">{t('header', { slug })}</h1>
-      <p>{t('content')}</p>
-
-      <div className="mt-5 text-center text-sm">
-        {`${t('code_review_powered_by')} `}
-        <a
-          className="text-blue-700 hover:border-b-2 hover:border-blue-700"
-          href="https://www.coderabbit.ai?utm_source=next_js_starter&utm_medium=github&utm_campaign=next_js_starter_oss_2025"
-        >
-          CodeRabbit
-        </a>
-      </div>
-
-      <a
-        href="https://www.coderabbit.ai?utm_source=next_js_starter&utm_medium=github&utm_campaign=next_js_starter_oss_2025"
-      >
-        <Image
-          className="mx-auto mt-2"
-          src="/assets/images/coderabbit-logo-light.svg"
-          alt="CodeRabbit"
-          width={128}
-          height={22}
-        />
-      </a>
-    </>
+    <div>
+      <h1 className="mb-4 text-3xl font-bold capitalize">{t('header', { slug })}</h1>
+      <p className="text-lg">{t('content')}</p>
+    </div>
   );
 };
 
