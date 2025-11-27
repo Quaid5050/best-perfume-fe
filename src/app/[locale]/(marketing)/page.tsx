@@ -57,10 +57,6 @@ export default async function Index(props: IIndexProps) {
         <li>🚀 Next.js with App Router support</li>
         <li>🔥 TypeScript for type checking</li>
         <li>💎 Tailwind CSS integration</li>
-        <li>📦 ORM with DrizzleORM (PostgreSQL, SQLite, MySQL support)</li>
-        <li>
-          💽 Dev database with PGlite and production with Neon (PostgreSQL)
-        </li>
         <li>
           🌐 Multi-language support (i18n) with next-intl and
           {' '}

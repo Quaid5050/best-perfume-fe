@@ -2,7 +2,6 @@
   "RootLayout": {
     "home_link": "Accueil",
     "about_link": "A propos",
-    "counter_link": "Compteur",
     "portfolio_link": "Portfolio"
   },
   "BaseTemplate": {
@@ -13,20 +12,6 @@
     "meta_title": "Présentation de Next.js Boilerplate",
     "meta_description": "Next js Boilerplate est le code de démarrage parfait pour votre projet. Construisez votre application React avec le framework Next.js.",
     "sponsors_title": "Partenaires"
-  },
-  "Counter": {
-    "meta_title": "Compteur",
-    "meta_description": "Un exemple d'opération DB",
-    "security_powered_by": "Sécurité, détection de bot et rate limiting propulsés par"
-  },
-  "CounterForm": {
-    "presentation": "Le compteur est stocké dans la base de données et incrémenté par la valeur que vous fournissez.",
-    "label_increment": "Incrémenter de",
-    "button_increment": "Incrémenter",
-    "error_increment_range": "La valeur doit être entre 1 et 3"
-  },
-  "CurrentCount": {
-    "count": "Nombre : {count}"
   },
   "About": {
     "meta_title": "A propos",
