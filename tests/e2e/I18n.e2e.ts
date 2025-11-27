@@ -16,14 +16,14 @@ test.describe('I18n', () => {
       ).toBeVisible();
     });
 
-    test('should switch language from English to French using URL and verify text on the sign-in page', async ({ page }) => {
-      await page.goto('/sign-in');
+    test('should switch language from English to French using URL and verify text on the about page', async ({ page }) => {
+      await page.goto('/about');
 
-      await expect(page.getByText('Email address')).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'About' })).toBeVisible();
 
-      await page.goto('/fr/sign-in');
+      await page.goto('/fr/about');
 
-      await expect(page.getByText('Adresse e-mail')).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'A propos' })).toBeVisible();
     });
   });
 });
