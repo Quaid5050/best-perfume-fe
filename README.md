@@ -1277,6 +1277,14 @@ If you find this project helpful, please consider sponsoring it to help support 
 
 ---
 
-Made with ♥ by [Quaid Ahmed](https://github.com/quaid5050) [![GitHub](https://img.shields.io/github/followers/quaid5050?label=Follow%20%40quaid5050&style=social)](https://github.com/quaid5050)
+## Credits
+
+This boilerplate is based on the excellent work by [Ixartz (Remi Wg)](https://github.com/ixartz) and the [Next.js Boilerplate](https://github.com/ixartz/Next-js-Boilerplate) project.
+
+Enhanced and maintained by [Quaid Ahmed](https://github.com/quaid5050) [![GitHub](https://img.shields.io/github/followers/quaid5050?label=Follow%20%40quaid5050&style=social)](https://github.com/quaid5050)
+
+---
+
+Made with ♥ by [Quaid Ahmed](https://github.com/quaid5050)
 
 Looking for a custom boilerplate to kick off your project? I'd be glad to discuss how I can help you build one. Feel free to reach out anytime!
